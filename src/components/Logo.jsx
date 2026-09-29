@@ -1,15 +1,18 @@
-export default function Logo({ size = 24, className = '', mode = 'auto' }) {
+export default function Logo({ size = 26, className = '', mode = 'auto' }) {
   const getPageFill = () => {
     if (mode === 'light') return '#1C1917'
     if (mode === 'dark') return '#F5F5F4'
     return 'currentColor'
   }
 
+  // Aspect ratio of the book mark: 376 / 236 ≈ 1.59
+  const width = Math.round(size * (376 / 236))
+
   return (
     <svg
-      width={size}
+      width={width}
       height={size}
-      viewBox="0 0 512 512"
+      viewBox="68 144 376 236"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
