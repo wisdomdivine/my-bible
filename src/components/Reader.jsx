@@ -20,23 +20,105 @@ export default function Reader({
   isVerseSaved,
 }) {
   const containerRef = useRef(null)
+  const initialRestored = useRef(false)
+  const isNavigating = useRef(false)
   const [selectedVerse, setSelectedVerse] = useState(null)
   const [copied, setCopied] = useState(false)
 
-  // Reset selected verse and fade-in smoothly when book or chapter changes
+  // Track and restore scroll position and last visible verse
   useEffect(() => {
     setSelectedVerse(null)
     setCopied(false)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    if (isNavigating.current) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      isNavigating.current = false
+    }
 
     if (containerRef.current) {
       gsap.fromTo(
         containerRef.current,
         { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+        { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }
       )
     }
   }, [book.id, chapter, translation])
+
+  // Restore scroll position upon initial load
+  useEffect(() => {
+    if (!initialRestored.current && verses.length > 0) {
+      const savedBookId = localStorage.getItem('my_bible_book_id')
+      const savedChapter = localStorage.getItem('my_bible_chapter')
+      const savedScrollY = localStorage.getItem('my_bible_scroll_y')
+      const savedVerse = localStorage.getItem('my_bible_last_verse')
+
+      if (
+        savedBookId &&
+        Number(savedBookId) === book.id &&
+        Number(savedChapter) === Number(chapter) &&
+        savedScrollY
+      ) {
+        const scrollYNum = Number(savedScrollY)
+        if (scrollYNum > 30) {
+          requestAnimationFrame(() => {
+            window.scrollTo({ top: scrollYNum, behavior: 'instant' })
+
+            if (savedVerse) {
+              const targetEl = document.getElementById(`verse-${savedVerse}`)
+              if (targetEl) {
+                targetEl.classList.add('resumed-verse-highlight')
+                setTimeout(() => {
+                  targetEl.classList.remove('resumed-verse-highlight')
+                }, 2500)
+              }
+            }
+          })
+        }
+      }
+      initialRestored.current = true
+    }
+  }, [verses, book.id, chapter])
+
+  // Record scroll position and visible verse as reader scrolls
+  useEffect(() => {
+    let timeoutId = null
+
+    const recordReadingPosition = () => {
+      localStorage.setItem('my_bible_scroll_y', window.scrollY)
+      localStorage.setItem('my_bible_book_id', book.id)
+      localStorage.setItem('my_bible_chapter', chapter)
+      localStorage.setItem('my_bible_book_name', book.name)
+
+      // Identify top visible verse in viewport
+      const verseElements = document.querySelectorAll('.verse-item[data-verse]')
+      for (const el of verseElements) {
+        const rect = el.getBoundingClientRect()
+        if (rect.top >= 20 && rect.top <= 260) {
+          const vNum = el.getAttribute('data-verse')
+          if (vNum) {
+            localStorage.setItem('my_bible_last_verse', vNum)
+          }
+          break
+        }
+      }
+    }
+
+    const handleScroll = () => {
+      if (timeoutId) clearTimeout(timeoutId)
+      timeoutId = setTimeout(recordReadingPosition, 100)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('beforeunload', recordReadingPosition)
+    window.addEventListener('pagehide', recordReadingPosition)
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId)
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('beforeunload', recordReadingPosition)
+      window.removeEventListener('pagehide', recordReadingPosition)
+    }
+  }, [book.id, chapter, book.name])
 
   const handleVerseClick = (v) => {
     if (selectedVerse?.verse === v.verse) {
@@ -66,6 +148,16 @@ export default function Reader({
       text: selectedVerse.text,
       translation,
     })
+  }
+
+  const handlePrev = () => {
+    isNavigating.current = true
+    onPrevChapter()
+  }
+
+  const handleNext = () => {
+    isNavigating.current = true
+    onNextChapter()
   }
 
   const isCurrentSaved =
@@ -101,6 +193,8 @@ export default function Reader({
             return (
               <span
                 key={v.pk || v.verse}
+                id={`verse-${v.verse}`}
+                data-verse={v.verse}
                 className={`verse-item ${isSelected ? 'is-selected' : ''}`}
                 onClick={() => handleVerseClick(v)}
               >
@@ -163,7 +257,7 @@ export default function Reader({
           <button
             type="button"
             className="nav-chapter-btn"
-            onClick={onPrevChapter}
+            onClick={handlePrev}
           >
             <IconArrowLeft size={16} stroke={1.5} aria-hidden="true" />
             <span>Previous chapter</span>
@@ -176,7 +270,7 @@ export default function Reader({
           <button
             type="button"
             className="nav-chapter-btn"
-            onClick={onNextChapter}
+            onClick={handleNext}
           >
             <span>Next chapter</span>
             <IconArrowRight size={16} stroke={1.5} aria-hidden="true" />

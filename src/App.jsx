@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import Header from './components/Header'
 import Reader from './components/Reader'
+import Sitelinks from './components/Sitelinks'
 import BookPickerModal from './components/BookPickerModal'
 import TranslationPickerModal from './components/TranslationPickerModal'
 import SearchModal from './components/SearchModal'
@@ -12,18 +13,36 @@ import { getChapter } from './services/bibleApi'
 import './App.css'
 
 export default function App() {
-  // Current passage and translation state (persisted)
+  // Current passage and translation state (initializes from URL or localStorage)
   const [currentBook, setCurrentBook] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    const bookParam = params.get('book')
+    if (bookParam) {
+      const match = bibleBooks.find(
+        (b) => b.name.toLowerCase() === bookParam.toLowerCase()
+      )
+      if (match) return match
+    }
     const savedBookId = localStorage.getItem('my_bible_book_id')
-    return savedBookId ? getBookById(savedBookId) : bibleBooks[0] // Genesis
+    return savedBookId ? getBookById(savedBookId) : bibleBooks[0]
   })
 
   const [currentChapter, setCurrentChapter] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    const chapParam = params.get('chapter')
+    if (chapParam && !isNaN(chapParam)) {
+      return Number(chapParam)
+    }
     const savedChap = localStorage.getItem('my_bible_chapter')
     return savedChap ? Number(savedChap) : 1
   })
 
   const [currentTranslation, setCurrentTranslation] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    const transParam = params.get('translation')
+    if (transParam) {
+      return transParam.toUpperCase()
+    }
     return localStorage.getItem('my_bible_translation') || defaultTranslation
   })
 
@@ -49,15 +68,18 @@ export default function App() {
     }
   })
 
-  // Persist navigation and saved verses
+  // Persist navigation and update URL for deep linking
   useEffect(() => {
     localStorage.setItem('my_bible_book_id', currentBook.id)
     localStorage.setItem('my_bible_chapter', currentChapter)
-  }, [currentBook.id, currentChapter])
-
-  useEffect(() => {
     localStorage.setItem('my_bible_translation', currentTranslation)
-  }, [currentTranslation])
+
+    const params = new URLSearchParams()
+    params.set('book', currentBook.name)
+    params.set('chapter', currentChapter)
+    params.set('translation', currentTranslation)
+    window.history.replaceState({}, '', `?${params.toString()}`)
+  }, [currentBook.id, currentBook.name, currentChapter, currentTranslation])
 
   useEffect(() => {
     try {
@@ -67,7 +89,7 @@ export default function App() {
     }
   }, [savedVerses])
 
-  // Fetch chapter text
+  // Fetch chapter text with offline-first caching
   const loadChapter = useCallback(async (bookId, chapterNum, translationId) => {
     setIsLoading(true)
     setError(null)
@@ -209,6 +231,15 @@ export default function App() {
           isVerseSaved={isVerseSaved}
         />
       </main>
+
+      {/* Sitelinks Directory */}
+      <Sitelinks
+        onSelectPassage={handleSelectPassage}
+        onOpenBookPicker={() => setIsBookPickerOpen(true)}
+        onOpenTranslationPicker={() => setIsTranslationPickerOpen(true)}
+        onOpenSearch={() => setIsSearchOpen(true)}
+        onOpenSaved={() => setIsSavedOpen(true)}
+      />
 
       {/* Book and Chapter Picker */}
       <BookPickerModal

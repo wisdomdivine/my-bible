@@ -88,6 +88,12 @@
   color: var(--craft-black);
 }
 
+.verse-item.resumed-verse-highlight {
+  background-color: var(--craft-cream);
+  color: var(--craft-black);
+  transition: background-color 1.2s ease, color 1.2s ease;
+}
+
 .verse-num {
   font-family: var(--sans);
   font-size: 12px;

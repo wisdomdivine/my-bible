@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bible</title>
     <meta name="description" content="A quiet, distraction free reading environment for the Holy Scriptures." />
+    <link rel="canonical" href="https://x-my-bible.web.app/" />
     
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Bible" />
     <meta property="og:description" content="A quiet, distraction free reading environment for the Holy Scriptures." />
-    <meta property="og:url" content="https://x-my-bible.web.app" />
+    <meta property="og:url" content="https://x-my-bible.web.app/" />
     <meta property="og:image" content="https://x-my-bible.web.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -20,6 +21,57 @@
     <meta name="twitter:title" content="Bible" />
     <meta name="twitter:description" content="A quiet, distraction free reading environment for the Holy Scriptures." />
     <meta name="twitter:image" content="https://x-my-bible.web.app/og-image.png" />
+
+    <!-- Google Sitelinks Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://x-my-bible.web.app/#website",
+          "url": "https://x-my-bible.web.app/",
+          "name": "Bible",
+          "description": "A quiet, distraction free reading environment for the Holy Scriptures.",
+          "inLanguage": "en",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://x-my-bible.web.app/?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "@id": "https://x-my-bible.web.app/#navigation",
+          "name": [
+            "Genesis",
+            "Psalms",
+            "Proverbs",
+            "Isaiah",
+            "Matthew",
+            "John",
+            "Romans",
+            "Revelation",
+            "Translations"
+          ],
+          "url": [
+            "https://x-my-bible.web.app/?book=Genesis&chapter=1",
+            "https://x-my-bible.web.app/?book=Psalms&chapter=23",
+            "https://x-my-bible.web.app/?book=Proverbs&chapter=3",
+            "https://x-my-bible.web.app/?book=Isaiah&chapter=40",
+            "https://x-my-bible.web.app/?book=Matthew&chapter=5",
+            "https://x-my-bible.web.app/?book=John&chapter=3",
+            "https://x-my-bible.web.app/?book=Romans&chapter=8",
+            "https://x-my-bible.web.app/?book=Revelation&chapter=21",
+            "https://x-my-bible.web.app/?view=translations"
+          ]
+        }
+      ]
+    }
+    </script>
 
     <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
