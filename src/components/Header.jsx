@@ -14,12 +14,16 @@ export default function Header({
 }) {
   return (
     <header className="site-header">
-      <div className="header-left">
+      {/* Brand Section */}
+      <div className="header-brand-section">
         <div className="brand-group">
           <Logo size={24} />
           <span className="brand-name">Bible</span>
         </div>
+      </div>
 
+      {/* Passage & Translation Selectors */}
+      <div className="header-passage-section">
         <button
           type="button"
           className="nav-action-pill passage-pill"
@@ -41,7 +45,8 @@ export default function Header({
         </button>
       </div>
 
-      <div className="header-right">
+      {/* Actions & Utilities Section */}
+      <div className="header-actions-section">
         <button
           type="button"
           className="nav-text-btn"

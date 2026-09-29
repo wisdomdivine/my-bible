@@ -206,26 +206,51 @@
 }
 
 @media (max-width: 680px) {
+  .reader-wrapper {
+    padding: 24px 0 100px;
+  }
+
+  .chapter-header {
+    margin-bottom: 44px;
+    gap: 8px;
+  }
+
   .chapter-book-title {
-    font-size: 36px;
+    font-size: 34px;
+  }
+
+  .chapter-number-display {
+    font-size: 22px;
   }
 
   .verses-body {
     font-size: 20px;
-    line-height: 2.0;
+    line-height: 2.05;
   }
 
   .verse-action-bar {
     width: calc(100% - 32px);
-    justify-content: space-between;
-    padding: 10px 14px;
-    border-radius: 16px;
+    max-width: 440px;
+    padding: 10px 16px;
+    border-radius: 9999px;
+    bottom: 24px;
   }
 
   .action-bar-content {
-    flex-wrap: wrap;
-    gap: 8px;
-    width: 100%;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .chapter-navigation {
+    margin-top: 64px;
+    padding-top: 32px;
+  }
+
+  .nav-chapter-btn {
+    padding: 8px 14px;
+    font-size: 14px;
   }
 }

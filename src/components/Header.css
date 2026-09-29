@@ -1,24 +1,21 @@
 .site-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-areas: "brand passage actions";
   align-items: center;
-  justify-content: space-between;
+  column-gap: 24px;
+  row-gap: 20px;
   padding: 36px 0 54px;
-  gap: 24px;
-  flex-wrap: wrap;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
+.header-brand-section {
+  grid-area: brand;
 }
 
 .brand-group {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-right: 8px;
 }
 
 .brand-name {
@@ -28,6 +25,14 @@
   letter-spacing: -0.01em;
   color: var(--text-primary);
   line-height: 1;
+}
+
+.header-passage-section {
+  grid-area: passage;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .nav-action-pill {
@@ -43,15 +48,26 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.15s ease, opacity 0.15s ease;
+  user-select: none;
 }
 
 .nav-action-pill:hover {
   opacity: 0.85;
 }
 
-.header-right {
+.passage-label {
+  white-space: nowrap;
+}
+
+.translation-label {
+  font-weight: 500;
+}
+
+.header-actions-section {
+  grid-area: actions;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 16px;
   flex-wrap: wrap;
 }
@@ -67,6 +83,7 @@
   border-radius: 9999px;
   cursor: pointer;
   transition: color 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
 }
 
 .nav-text-btn:hover {
@@ -74,9 +91,51 @@
   background-color: var(--bg-subtle);
 }
 
-@media (max-width: 680px) {
+/* Responsive breakpoint: when header is cramped on smaller devices */
+@media (max-width: 768px) {
   .site-header {
-    padding: 24px 0 36px;
-    gap: 16px;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "brand actions"
+      "passage passage";
+    row-gap: 20px;
+    column-gap: 16px;
+    padding: 24px 0 40px;
+  }
+
+  .header-actions-section {
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  .header-passage-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    row-gap: 16px;
+    padding: 20px 0 32px;
+  }
+
+  .brand-name {
+    font-size: 24px;
+  }
+
+  .header-actions-section {
+    gap: 8px;
+  }
+
+  .nav-text-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .nav-action-pill {
+    padding: 7px 14px;
+    font-size: 13px;
   }
 }
