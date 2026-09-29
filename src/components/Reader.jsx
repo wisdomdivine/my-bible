@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import gsap from 'gsap'
 import './Reader.css'
 
@@ -164,7 +165,8 @@ export default function Reader({
             className="nav-chapter-btn"
             onClick={onPrevChapter}
           >
-            Previous chapter
+            <IconArrowLeft size={16} stroke={1.5} aria-hidden="true" />
+            <span>Previous chapter</span>
           </button>
         ) : (
           <span />
@@ -176,7 +178,8 @@ export default function Reader({
             className="nav-chapter-btn"
             onClick={onNextChapter}
           >
-            Next chapter
+            <span>Next chapter</span>
+            <IconArrowRight size={16} stroke={1.5} aria-hidden="true" />
           </button>
         )}
       </nav>
