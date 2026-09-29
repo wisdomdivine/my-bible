@@ -1,0 +1,228 @@
+.reader-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0 120px;
+}
+
+.chapter-header {
+  margin-bottom: 64px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chapter-book-title {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.15;
+}
+
+.chapter-number-display {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--text-muted);
+}
+
+.reader-status-message {
+  padding: 80px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.status-text {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--text-muted);
+}
+
+.retry-btn {
+  background-color: var(--bg-subtle);
+  border: none;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.retry-btn:hover {
+  opacity: 0.8;
+}
+
+/* Scripture Text */
+.verses-body {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 2.15;
+  color: var(--text-primary);
+  letter-spacing: 0.005em;
+  word-spacing: 0.02em;
+}
+
+.verse-item {
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 2px 4px;
+  transition: background-color 0.15s ease;
+}
+
+.verse-item:hover {
+  background-color: var(--bg-subtle);
+}
+
+.verse-item.is-selected {
+  background-color: var(--craft-cream);
+  color: var(--craft-black);
+}
+
+.verse-num {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-faint);
+  margin-right: 6px;
+  user-select: none;
+}
+
+.verse-item.is-selected .verse-num {
+  color: var(--craft-orange);
+}
+
+.verse-text {
+  font-family: inherit;
+}
+
+/* Floating Action Bar */
+.verse-action-bar {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-surface);
+  border-radius: 9999px;
+  padding: 6px 10px 6px 20px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+:root[data-theme="light"] .verse-action-bar {
+  background-color: var(--craft-black);
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .verse-action-bar {
+  background-color: #272727;
+  color: #ffffff;
+}
+
+.action-bar-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.action-reference {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.action-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.action-btn,
+.action-btn-quiet {
+  background: transparent;
+  border: none;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.action-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.action-btn-quiet {
+  opacity: 0.65;
+}
+
+.action-btn-quiet:hover {
+  opacity: 1;
+}
+
+/* Chapter Navigation */
+.chapter-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 100px;
+  padding-top: 48px;
+}
+
+.nav-chapter-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-chapter-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-subtle);
+}
+
+@media (max-width: 680px) {
+  .chapter-book-title {
+    font-size: 36px;
+  }
+
+  .verses-body {
+    font-size: 20px;
+    line-height: 2.0;
+  }
+
+  .verse-action-bar {
+    width: calc(100% - 32px);
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 16px;
+  }
+
+  .action-bar-content {
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

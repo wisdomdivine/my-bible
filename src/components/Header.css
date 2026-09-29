@@ -1,0 +1,81 @@
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36px 0 54px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.brand-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 8px;
+}
+
+.brand-name {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.nav-action-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 18px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.nav-action-pill:hover {
+  opacity: 0.85;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.nav-text-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-text-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-subtle);
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    padding: 24px 0 36px;
+    gap: 16px;
+  }
+}

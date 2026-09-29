@@ -1,0 +1,115 @@
+.trans-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 24px;
+  z-index: 1000;
+  overflow-y: auto;
+  backdrop-filter: blur(8px);
+}
+
+.trans-container {
+  background-color: var(--bg);
+  width: 100%;
+  max-width: 540px;
+  border-radius: 20px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: auto;
+}
+
+.trans-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trans-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.trans-close-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.trans-close-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-subtle);
+}
+
+.trans-intro {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.trans-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.trans-item-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  text-align: left;
+}
+
+.trans-item-btn:hover {
+  background-color: var(--bg-subtle);
+}
+
+.trans-item-btn.is-active {
+  background-color: var(--bg-subtle);
+}
+
+.trans-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.trans-name {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.trans-short {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
+.trans-item-btn.is-active .trans-short {
+  color: var(--craft-orange);
+}

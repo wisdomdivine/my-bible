@@ -1,0 +1,196 @@
+.picker-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 24px;
+  z-index: 1000;
+  overflow-y: auto;
+  backdrop-filter: blur(8px);
+}
+
+.picker-container {
+  background-color: var(--bg);
+  width: 100%;
+  max-width: 720px;
+  border-radius: 20px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin: auto;
+}
+
+.picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.picker-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.picker-back-btn,
+.picker-close-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.picker-back-btn:hover,
+.picker-close-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-subtle);
+}
+
+.picker-search-bar {
+  margin-bottom: 8px;
+}
+
+.picker-search-input {
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-size: 16px;
+}
+
+.picker-search-input::placeholder {
+  color: var(--text-faint);
+}
+
+.testaments-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.testament-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.testament-heading {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.books-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.book-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-size: 15px;
+  transition: background-color 0.15s ease;
+}
+
+.book-btn:hover {
+  background-color: var(--bg-subtle);
+}
+
+.book-btn.is-active {
+  background-color: var(--bg-subtle);
+  font-weight: 500;
+}
+
+.book-chapters-text {
+  font-size: 13px;
+  color: var(--text-faint);
+}
+
+/* Chapters View */
+.chapters-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px 0 24px;
+}
+
+.chapters-book-name {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.chapters-prompt {
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.chapter-btn {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-subtle);
+  border: none;
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.chapter-btn:hover {
+  background-color: var(--craft-cream);
+  color: var(--craft-black);
+}
+
+.chapter-btn.is-active {
+  background-color: var(--craft-orange);
+  color: #ffffff;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .testaments-columns {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .picker-container {
+    padding: 24px 18px;
+  }
+}
