@@ -1,0 +1,188 @@
+/* Neue Haas Grotesk (from entertheplayground.co) */
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/neue-haas-grotesk-300.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/neue-haas-grotesk-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/neue-haas-grotesk-400-italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/neue-haas-grotesk-500.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/neue-haas-grotesk-700.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/neue-haas-grotesk-900.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Signifier Serif (from interfacecraft.dev) */
+@font-face {
+  font-family: 'Signifier';
+  src: url('/fonts/signifier-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Signifier';
+  src: url('/fonts/signifier-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Signifier';
+  src: url('/fonts/signifier-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Founders Grotesk (from interfacecraft.dev) */
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src: url('/fonts/founders-grotesk-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Typography */
+  --serif: 'Signifier', Georgia, serif;
+  --sans: 'Neue Haas Grotesk', 'Founders Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --founders: 'Founders Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --heading: 'Neue Haas Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Interface Craft Palette */
+  --craft-orange: #E54F10;
+  --craft-cream: #F6EBD9;
+  --craft-blue: #1D57F6;
+  --craft-mint: #53F399;
+  --craft-black: #010101;
+  --craft-sky: #00A1F1;
+  --craft-pink: #FD73ED;
+  --craft-yellow: #FFD102;
+
+  /* Light Theme */
+  --bg: #faf8f5;
+  --bg-surface: #ffffff;
+  --bg-subtle: #efece6;
+  --text-primary: #141414;
+  --text-muted: #6f6b64;
+  --text-faint: #a09c95;
+
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+:root[data-theme="light"] {
+  --bg: #faf8f5;
+  --bg-surface: #ffffff;
+  --bg-subtle: #efece6;
+  --text-primary: #141414;
+  --text-muted: #6f6b64;
+  --text-faint: #a09c95;
+}
+
+:root[data-theme="dark"] {
+  --bg: #121212;
+  --bg-surface: #1c1c1c;
+  --bg-subtle: #272727;
+  --text-primary: #f0f0f0;
+  --text-muted: #9c9a96;
+  --text-faint: #605e5a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121212;
+    --bg-surface: #1c1c1c;
+    --bg-subtle: #272727;
+    --text-primary: #f0f0f0;
+    --text-muted: #9c9a96;
+    --text-faint: #605e5a;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
