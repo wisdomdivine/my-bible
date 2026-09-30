@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import gsap from 'gsap'
 import './Reader.css'
@@ -191,64 +191,69 @@ export default function Reader({
           {verses.map((v) => {
             const isSelected = selectedVerse?.verse === v.verse
             return (
-              <span
-                key={v.pk || v.verse}
-                id={`verse-${v.verse}`}
-                data-verse={v.verse}
-                className={`verse-item ${isSelected ? 'is-selected' : ''}`}
-                onClick={() => handleVerseClick(v)}
-              >
-                <sup className="verse-num">{v.verse}</sup>
-                <span className="verse-text">{v.text} </span>
-              </span>
+              <Fragment key={v.pk || v.verse}>
+                <span
+                  id={`verse-${v.verse}`}
+                  data-verse={v.verse}
+                  className={`verse-item ${isSelected ? 'is-selected' : ''}`}
+                  onClick={() => handleVerseClick(v)}
+                >
+                  <sup className="verse-num">{v.verse}</sup>
+                  <span className="verse-text">{v.text} </span>
+                </span>
+                {isSelected && (
+                  <div className="verse-inline-actions" onClick={(e) => e.stopPropagation()}>
+                    <aside
+                      className="verse-action-bar"
+                      role="toolbar"
+                      aria-label="Verse options"
+                    >
+                      <div className="action-bar-content">
+                        <span className="action-reference">
+                          {book.name} {chapter}:{selectedVerse.verse}
+                        </span>
+
+                        <div className="action-buttons-group">
+                          <button
+                            type="button"
+                            className="action-btn"
+                            onClick={handleCopy}
+                          >
+                            {copied ? 'Copied' : 'Copy'}
+                          </button>
+
+                          <button
+                            type="button"
+                            className="action-btn"
+                            onClick={handleToggleSave}
+                          >
+                            {isCurrentSaved ? 'Saved' : 'Save'}
+                          </button>
+
+                          <button
+                            type="button"
+                            className="action-btn"
+                            onClick={() => onCompareVerse(selectedVerse)}
+                          >
+                            Compare
+                          </button>
+
+                          <button
+                            type="button"
+                            className="action-btn-quiet"
+                            onClick={() => setSelectedVerse(null)}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </aside>
+                  </div>
+                )}
+              </Fragment>
             )
           })}
         </div>
-      )}
-
-      {/* Floating Selected Verse Action Pill */}
-      {selectedVerse && (
-        <aside className="verse-action-bar" role="toolbar" aria-label="Verse options">
-          <div className="action-bar-content">
-            <span className="action-reference">
-              {book.name} {chapter}:{selectedVerse.verse}
-            </span>
-
-            <div className="action-buttons-group">
-              <button
-                type="button"
-                className="action-btn"
-                onClick={handleCopy}
-              >
-                {copied ? 'Copied' : 'Copy'}
-              </button>
-
-              <button
-                type="button"
-                className="action-btn"
-                onClick={handleToggleSave}
-              >
-                {isCurrentSaved ? 'Saved' : 'Save'}
-              </button>
-
-              <button
-                type="button"
-                className="action-btn"
-                onClick={() => onCompareVerse(selectedVerse)}
-              >
-                Compare
-              </button>
-
-              <button
-                type="button"
-                className="action-btn-quiet"
-                onClick={() => setSelectedVerse(null)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </aside>
       )}
 
       {/* Chapter Navigation */}

@@ -111,17 +111,31 @@
   font-family: inherit;
 }
 
-/* Floating Action Bar */
+/* Inline Selected Verse Action Bar */
+.verse-inline-actions {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 16px 0 22px 0;
+  animation: verseActionsFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes verseActionsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .verse-action-bar {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
   background-color: var(--bg-surface);
   border-radius: 9999px;
   padding: 6px 10px 6px 20px;
-  z-index: 900;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 20px;
 }
@@ -234,12 +248,14 @@
     line-height: 2.05;
   }
 
+  .verse-inline-actions {
+    margin: 12px 0 18px 0;
+  }
+
   .verse-action-bar {
-    width: calc(100% - 32px);
-    max-width: 440px;
-    padding: 10px 16px;
+    width: 100%;
+    padding: 8px 14px;
     border-radius: 9999px;
-    bottom: 24px;
   }
 
   .action-bar-content {
@@ -247,7 +263,17 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    gap: 12px;
+    gap: 8px;
+  }
+
+  .action-buttons-group {
+    gap: 2px;
+  }
+
+  .action-btn,
+  .action-btn-quiet {
+    padding: 6px 8px;
+    font-size: 12px;
   }
 
   .chapter-navigation {
