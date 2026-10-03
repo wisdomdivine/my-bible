@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, Fragment } from 'react'
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import gsap from 'gsap'
 import './Reader.css'
 
@@ -11,10 +10,6 @@ export default function Reader({
   isLoading,
   error,
   onRetry,
-  onPrevChapter,
-  onNextChapter,
-  hasPrev,
-  hasNext,
   onCompareVerse,
   onSaveVerse,
   isVerseSaved,
@@ -150,16 +145,6 @@ export default function Reader({
     })
   }
 
-  const handlePrev = () => {
-    isNavigating.current = true
-    onPrevChapter()
-  }
-
-  const handleNext = () => {
-    isNavigating.current = true
-    onNextChapter()
-  }
-
   const isCurrentSaved =
     selectedVerse &&
     isVerseSaved(book.id, Number(chapter), Number(selectedVerse.verse))
@@ -255,33 +240,6 @@ export default function Reader({
           })}
         </div>
       )}
-
-      {/* Chapter Navigation */}
-      <nav className="chapter-navigation" aria-label="Chapter navigation">
-        {hasPrev ? (
-          <button
-            type="button"
-            className="nav-chapter-btn"
-            onClick={handlePrev}
-          >
-            <IconArrowLeft size={16} stroke={1.5} aria-hidden="true" />
-            <span>Previous chapter</span>
-          </button>
-        ) : (
-          <span />
-        )}
-
-        {hasNext && (
-          <button
-            type="button"
-            className="nav-chapter-btn"
-            onClick={handleNext}
-          >
-            <span>Next chapter</span>
-            <IconArrowRight size={16} stroke={1.5} aria-hidden="true" />
-          </button>
-        )}
-      </nav>
     </article>
   )
 }

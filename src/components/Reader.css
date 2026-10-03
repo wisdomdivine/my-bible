@@ -195,36 +195,6 @@
   opacity: 1;
 }
 
-/* Chapter Navigation */
-.chapter-navigation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 100px;
-  padding-top: 48px;
-}
-
-.nav-chapter-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: transparent;
-  border: none;
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 10px 20px;
-  border-radius: 9999px;
-  transition: color 0.15s ease, background-color 0.15s ease;
-}
-
-.nav-chapter-btn:hover {
-  color: var(--text-primary);
-  background-color: var(--bg-subtle);
-}
-
 @media (max-width: 680px) {
   .reader-wrapper {
     padding: 24px 0 100px;
@@ -274,15 +244,5 @@
   .action-btn-quiet {
     padding: 6px 8px;
     font-size: 12px;
-  }
-
-  .chapter-navigation {
-    margin-top: 64px;
-    padding-top: 32px;
-  }
-
-  .nav-chapter-btn {
-    padding: 8px 14px;
-    font-size: 14px;
   }
 }

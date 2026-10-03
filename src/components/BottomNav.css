@@ -1,0 +1,142 @@
+.bottom-nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  background-color: rgba(250, 248, 245, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 12px 0 max(16px, env(safe-area-inset-bottom, 16px));
+}
+
+:root[data-theme="dark"] .bottom-nav-bar {
+  background-color: rgba(18, 18, 18, 0.9);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bottom-nav-bar {
+    background-color: rgba(18, 18, 18, 0.9);
+  }
+}
+
+.bottom-nav-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.bottom-nav-side {
+  flex: 1;
+  display: flex;
+}
+
+.bottom-nav-left {
+  justify-content: flex-start;
+}
+
+.bottom-nav-right {
+  justify-content: flex-end;
+}
+
+.bottom-nav-placeholder {
+  min-height: 38px;
+  width: 1px;
+}
+
+.bottom-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-subtle);
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 18px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.bottom-nav-btn:hover {
+  opacity: 0.85;
+}
+
+.nav-btn-text-short {
+  display: none;
+}
+
+.bottom-nav-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-nav-center-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.15s ease;
+}
+
+.bottom-nav-center-btn:hover {
+  background-color: var(--bg-subtle);
+}
+
+.bottom-nav-passage {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease;
+}
+
+.bottom-nav-center-btn:hover .bottom-nav-passage {
+  color: var(--text-primary);
+}
+
+@media (max-width: 680px) {
+  .bottom-nav-bar {
+    padding: 10px 0 max(12px, env(safe-area-inset-bottom, 12px));
+  }
+
+  .bottom-nav-inner {
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  .bottom-nav-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .nav-btn-text-full {
+    display: none;
+  }
+
+  .nav-btn-text-short {
+    display: inline;
+  }
+
+  .bottom-nav-passage {
+    font-size: 15px;
+  }
+
+  .bottom-nav-center-btn {
+    padding: 6px 10px;
+  }
+}

@@ -7,6 +7,7 @@ import TranslationPickerModal from './components/TranslationPickerModal'
 import SearchModal from './components/SearchModal'
 import SavedModal from './components/SavedModal'
 import CompareModal from './components/CompareModal'
+import BottomNav from './components/BottomNav'
 import { bibleBooks, getBookById } from './data/bibleBooks'
 import { defaultTranslation } from './data/translations'
 import { getChapter } from './services/bibleApi'
@@ -110,6 +111,7 @@ export default function App() {
 
   // Previous Chapter Navigation
   const handlePrevChapter = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     if (currentChapter > 1) {
       setCurrentChapter((prev) => prev - 1)
     } else {
@@ -124,6 +126,7 @@ export default function App() {
 
   // Next Chapter Navigation
   const handleNextChapter = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     if (currentChapter < currentBook.chapters) {
       setCurrentChapter((prev) => prev + 1)
     } else {
@@ -222,10 +225,6 @@ export default function App() {
           isLoading={isLoading}
           error={error}
           onRetry={() => loadChapter(currentBook.id, currentChapter, currentTranslation)}
-          onPrevChapter={handlePrevChapter}
-          onNextChapter={handleNextChapter}
-          hasPrev={hasPrev}
-          hasNext={hasNext}
           onCompareVerse={(v) => setComparingVerse(v)}
           onSaveVerse={handleToggleSaveVerse}
           isVerseSaved={isVerseSaved}
@@ -281,6 +280,17 @@ export default function App() {
         book={currentBook}
         chapter={currentChapter}
         verse={comparingVerse}
+      />
+
+      {/* Bottom Chapter Navigation Bar */}
+      <BottomNav
+        book={currentBook}
+        chapter={currentChapter}
+        onPrevChapter={handlePrevChapter}
+        onNextChapter={handleNextChapter}
+        hasPrev={hasPrev}
+        hasNext={hasNext}
+        onOpenBookPicker={() => setIsBookPickerOpen(true)}
       />
     </div>
   )
