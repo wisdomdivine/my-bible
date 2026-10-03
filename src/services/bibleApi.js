@@ -68,3 +68,29 @@ export async function getVerseComparisons(bookId, chapter, verseNumber, translat
     .filter((r) => r.status === 'fulfilled' && r.value.text)
     .map((r) => r.value)
 }
+
+/**
+ * Fetches all available translations for an entire chapter
+ */
+export async function getAllTranslationsForChapter(
+  bookId,
+  chapter,
+  translationList = ['ESV', 'NIV', 'KJV', 'WEB', 'NLT', 'CSB17', 'NASB', 'BSB', 'NKJV', 'AMP']
+) {
+  const results = {}
+
+  for (const tid of translationList) {
+    try {
+      const data = await getChapter(tid, bookId, chapter)
+      if (data && data.length > 0) {
+        results[tid] = data
+      }
+    } catch {
+      // Continue to next translation if one fails
+    }
+    await new Promise((r) => setTimeout(r, 120))
+  }
+
+  return results
+}
+

@@ -9,8 +9,8 @@ import SavedModal from './components/SavedModal'
 import CompareModal from './components/CompareModal'
 import BottomNav from './components/BottomNav'
 import { bibleBooks, getBookById } from './data/bibleBooks'
-import { defaultTranslation } from './data/translations'
-import { getChapter } from './services/bibleApi'
+import { translations, defaultTranslation } from './data/translations'
+import { getChapter, getAllTranslationsForChapter } from './services/bibleApi'
 import './App.css'
 
 export default function App() {
@@ -49,6 +49,7 @@ export default function App() {
 
   // Chapter content and loading
   const [verses, setVerses] = useState([])
+  const [allVersesData, setAllVersesData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -96,8 +97,21 @@ export default function App() {
     setError(null)
 
     try {
-      const data = await getChapter(translationId, bookId, chapterNum)
-      setVerses(data)
+      if (translationId === 'ALL') {
+        const allData = await getAllTranslationsForChapter(bookId, chapterNum)
+        setAllVersesData(allData)
+        const base =
+          allData['ESV'] ||
+          allData['KJV'] ||
+          allData['NIV'] ||
+          Object.values(allData)[0] ||
+          []
+        setVerses(base)
+      } else {
+        const data = await getChapter(translationId, bookId, chapterNum)
+        setVerses(data)
+        setAllVersesData(null)
+      }
       setIsLoading(false)
     } catch {
       setError('Unable to load this chapter right now. Please check your connection.')
@@ -208,9 +222,7 @@ export default function App() {
       <Header
         currentBook={currentBook}
         currentChapter={currentChapter}
-        currentTranslation={currentTranslation}
         onOpenBookPicker={() => setIsBookPickerOpen(true)}
-        onOpenTranslationPicker={() => setIsTranslationPickerOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenSaved={() => setIsSavedOpen(true)}
         savedCount={savedVerses.length}
@@ -221,7 +233,10 @@ export default function App() {
           book={currentBook}
           chapter={currentChapter}
           translation={currentTranslation}
+          translations={translations}
+          onSelectTranslation={(trans) => setCurrentTranslation(trans)}
           verses={verses}
+          allVersesData={allVersesData}
           isLoading={isLoading}
           error={error}
           onRetry={() => loadChapter(currentBook.id, currentChapter, currentTranslation)}

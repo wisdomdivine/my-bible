@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState, Fragment } from 'react'
 import gsap from 'gsap'
+import VersionBar from './VersionBar'
 import './Reader.css'
 
 export default function Reader({
   book,
   chapter,
   translation,
+  translations = [],
+  onSelectTranslation,
   verses,
+  allVersesData,
   isLoading,
   error,
   onRetry,
@@ -85,7 +89,7 @@ export default function Reader({
       localStorage.setItem('my_bible_book_name', book.name)
 
       // Identify top visible verse in viewport
-      const verseElements = document.querySelectorAll('.verse-item[data-verse]')
+      const verseElements = document.querySelectorAll('.verse-item[data-verse], .verse-parallel-group[data-verse]')
       for (const el of verseElements) {
         const rect = el.getBoundingClientRect()
         if (rect.top >= 20 && rect.top <= 260) {
@@ -116,7 +120,7 @@ export default function Reader({
   }, [book.id, chapter, book.name])
 
   const handleVerseClick = (v) => {
-    if (selectedVerse?.verse === v.verse) {
+    if (selectedVerse?.verse === v.verse && selectedVerse?.translation === v.translation) {
       setSelectedVerse(null)
     } else {
       setSelectedVerse(v)
@@ -126,7 +130,8 @@ export default function Reader({
 
   const handleCopy = () => {
     if (!selectedVerse) return
-    const textToCopy = `"${selectedVerse.text}" (${book.name} ${chapter}:${selectedVerse.verse} ${translation})`
+    const verseTrans = selectedVerse.translation || translation
+    const textToCopy = `"${selectedVerse.text}" (${book.name} ${chapter}:${selectedVerse.verse} ${verseTrans})`
     navigator.clipboard.writeText(textToCopy).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2200)
@@ -135,19 +140,22 @@ export default function Reader({
 
   const handleToggleSave = () => {
     if (!selectedVerse) return
+    const verseTrans = selectedVerse.translation || translation
     onSaveVerse({
       bookId: book.id,
       bookName: book.name,
       chapter: Number(chapter),
       verse: Number(selectedVerse.verse),
       text: selectedVerse.text,
-      translation,
+      translation: verseTrans,
     })
   }
 
   const isCurrentSaved =
     selectedVerse &&
     isVerseSaved(book.id, Number(chapter), Number(selectedVerse.verse))
+
+  const isAllMode = translation === 'ALL'
 
   return (
     <article className="reader-wrapper" ref={containerRef}>
@@ -156,9 +164,18 @@ export default function Reader({
         <span className="chapter-number-display">{chapter}</span>
       </header>
 
+      {/* Horizontal Sticky Version Bar */}
+      <VersionBar
+        translations={translations}
+        currentTranslation={translation}
+        onSelectTranslation={onSelectTranslation}
+      />
+
       {isLoading && (
         <div className="reader-status-message">
-          <p className="status-text">Loading scripture...</p>
+          <p className="status-text">
+            {isAllMode ? 'Loading all versions...' : 'Loading scripture...'}
+          </p>
         </div>
       )}
 
@@ -171,7 +188,8 @@ export default function Reader({
         </div>
       )}
 
-      {!isLoading && !error && verses.length > 0 && (
+      {/* Single Version View */}
+      {!isLoading && !error && !isAllMode && verses.length > 0 && (
         <div className="verses-body">
           {verses.map((v) => {
             const isSelected = selectedVerse?.verse === v.verse
@@ -236,6 +254,90 @@ export default function Reader({
                   </div>
                 )}
               </Fragment>
+            )
+          })}
+        </div>
+      )}
+
+      {/* All Versions (Parallel) View */}
+      {!isLoading && !error && isAllMode && allVersesData && verses.length > 0 && (
+        <div className="all-versions-container">
+          {verses.map((v) => {
+            const verseNum = v.verse
+            const isGroupSelected = selectedVerse?.verse === verseNum
+            return (
+              <div
+                key={verseNum}
+                id={`verse-${verseNum}`}
+                data-verse={verseNum}
+                className="verse-parallel-group"
+              >
+                <div className="verse-parallel-num-badge">{verseNum}</div>
+                <div className="verse-parallel-translations">
+                  {translations.map((t) => {
+                    const transList = allVersesData[t.id]
+                    if (!transList) return null
+                    const match = transList.find((item) => Number(item.verse) === Number(verseNum))
+                    if (!match || !match.text) return null
+                    const isSelected =
+                      selectedVerse?.verse === verseNum && selectedVerse?.translation === t.id
+                    return (
+                      <div
+                        key={t.id}
+                        className={`verse-parallel-row ${isSelected ? 'is-selected' : ''}`}
+                        onClick={() =>
+                          handleVerseClick({ ...match, verse: verseNum, translation: t.id })
+                        }
+                      >
+                        <span className="verse-parallel-tag">{t.short || t.id}</span>
+                        <span className="verse-parallel-text">{match.text}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+
+                {isGroupSelected && (
+                  <div className="verse-inline-actions" onClick={(e) => e.stopPropagation()}>
+                    <aside
+                      className="verse-action-bar"
+                      role="toolbar"
+                      aria-label="Verse options"
+                    >
+                      <div className="action-bar-content">
+                        <span className="action-reference">
+                          {book.name} {chapter}:{selectedVerse.verse} ({selectedVerse.translation})
+                        </span>
+
+                        <div className="action-buttons-group">
+                          <button
+                            type="button"
+                            className="action-btn"
+                            onClick={handleCopy}
+                          >
+                            {copied ? 'Copied' : 'Copy'}
+                          </button>
+
+                          <button
+                            type="button"
+                            className="action-btn"
+                            onClick={handleToggleSave}
+                          >
+                            {isCurrentSaved ? 'Saved' : 'Save'}
+                          </button>
+
+                          <button
+                            type="button"
+                            className="action-btn-quiet"
+                            onClick={() => setSelectedVerse(null)}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </aside>
+                  </div>
+                )}
+              </div>
             )
           })}
         </div>

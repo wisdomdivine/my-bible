@@ -5,9 +5,7 @@ import './Header.css'
 export default function Header({
   currentBook,
   currentChapter,
-  currentTranslation,
   onOpenBookPicker,
-  onOpenTranslationPicker,
   onOpenSearch,
   onOpenSaved,
   savedCount = 0,
@@ -22,7 +20,7 @@ export default function Header({
         </div>
       </div>
 
-      {/* Passage & Translation Selectors */}
+      {/* Passage Selector */}
       <div className="header-passage-section">
         <button
           type="button"
@@ -33,15 +31,6 @@ export default function Header({
           <span className="passage-label">
             {currentBook.name} {currentChapter}
           </span>
-        </button>
-
-        <button
-          type="button"
-          className="nav-action-pill translation-pill"
-          onClick={onOpenTranslationPicker}
-          aria-label="Select translation"
-        >
-          <span className="translation-label">{currentTranslation}</span>
         </button>
       </div>
 
